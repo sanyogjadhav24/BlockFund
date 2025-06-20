@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { logo, sun, logout } from '../assets'; // Make sure 'logout' icon is added in assets
 import { navlinks } from '../constants';
 import { useStateContext } from '../context';
-import { useTheme } from '../context/ThemeContext';
+
 
 const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
   <div
@@ -34,7 +34,7 @@ const Sidebar = () => {
       navigate('/'); // redirect to home
     }
   };
-  const { darkMode, toggleTheme } = useTheme();
+
 
   return (
     <div className="flex flex-col items-center sticky top-5 h-[93vh] z-50">
