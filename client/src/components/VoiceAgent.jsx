@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const VoiceAgent = () => {
   const navigate = useNavigate();
-  const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
+  const { transcript, listening, resetTranscript } = useSpeechRecognition();
   const listenTimeoutRef = useRef(null);
   const responseTimeoutRef = useRef(null);
 
@@ -104,7 +104,8 @@ const VoiceAgent = () => {
     }
   }, [listening]);
 
-  if (!browserSupportsSpeechRecognition()) {
+  // ✅ Use the function from SpeechRecognition, NOT the hook
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return (
       <div className="fixed bottom-6 right-6 z-50 bg-red-500 text-white p-4 rounded-lg shadow-lg">
         ❌ Your browser doesn't support speech recognition.
