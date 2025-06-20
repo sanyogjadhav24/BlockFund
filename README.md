@@ -1,4 +1,4 @@
-# 🎙️ BlockFund - Voice-Powered Crowdfunding Platform
+# 🎙️ BlockFund - Voice-Powered Blockchain based Crowdfunding Platform
 
 BlockFund is a modern, decentralized crowdfunding platform built with React, Vite Thirdweb, and Tailwind CSS, enhanced with a powerful **voice assistant** for hands-free navigation and form interaction.
 
