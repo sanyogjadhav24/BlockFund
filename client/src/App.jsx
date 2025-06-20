@@ -1,14 +1,14 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Sidebar } from './components';
-import { ThemeProvider } from './context/ThemeContext';
+
 import { CampaignDetails, CreateCampaign, Home, Profile } from './pages';
 import VoiceAgent from './components/VoiceAgent';
 import Withdrawl from './pages/Withdrawl';
 
 const App = () => {
   return (
-    <ThemeProvider>
+  <div>
       {/* 🌓 Global Theme Wrapper */}
       <div className="bg-white dark:bg-[#0f051d] text-black dark:text-white transition-colors duration-300 min-h-screen">
         <div className="relative sm:p-8 p-4 flex flex-row">
@@ -28,7 +28,7 @@ const App = () => {
           </div>
         </div>
       </div>
-    </ThemeProvider>
+</div>
   );
 };
 
