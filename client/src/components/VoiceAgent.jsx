@@ -1,22 +1,27 @@
-// components/VoiceAgent.jsx
 import React, { useEffect, useRef } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { useNavigate } from 'react-router-dom';
 
 const VoiceAgent = () => {
   const navigate = useNavigate();
-  const { transcript, listening, resetTranscript } = useSpeechRecognition();
+  const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
   const listenTimeoutRef = useRef(null);
   const responseTimeoutRef = useRef(null);
 
   const speak = (text) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    window.speechSynthesis.speak(utterance);
+    if (typeof window !== 'undefined') {
+      const utterance = new SpeechSynthesisUtterance(text);
+      window.speechSynthesis.speak(utterance);
+    }
   };
 
   const startListening = () => {
     resetTranscript();
-    SpeechRecognition.startListening({ continuous: false });
+    try {
+      SpeechRecognition.startListening({ continuous: false });
+    } catch (error) {
+      console.error("Speech recognition failed to start:", error);
+    }
 
     if (listenTimeoutRef.current) clearTimeout(listenTimeoutRef.current);
     listenTimeoutRef.current = setTimeout(() => {
@@ -71,28 +76,24 @@ const VoiceAgent = () => {
         triggerReactInputChange(textarea, story);
         speak("Typed your story");
       }
-    }
-    
-    else if (command.includes("search campaign")) {
-  const keyword = command.replace("search campaign", "").trim();
-  if (window.searchCampaigns) {
-    window.searchCampaigns(keyword);
-    speak(`Searching for campaign titled ${keyword}`);
-  } else {
-    speak("Sorry, search is not available here.");
-  }
-}
-else if (command.includes("reload") || command.includes("refresh")) {
-  speak("Reloading the page");
-  window.location.reload();
-}
-    
-    else {
+    } else if (command.includes("search campaign")) {
+      const keyword = command.replace("search campaign", "").trim();
+      if (typeof window !== 'undefined' && window.searchCampaigns) {
+        window.searchCampaigns(keyword);
+        speak(`Searching for campaign titled ${keyword}`);
+      } else {
+        speak("Sorry, search is not available here.");
+      }
+    } else if (command.includes("reload") || command.includes("refresh")) {
+      speak("Reloading the page");
+      window.location.reload();
+    } else {
       speak("Sorry, I did not understand the command.");
     }
   };
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     if (!listening && transcript) {
       handleCommand(transcript.toLowerCase().trim());
       resetTranscript();
@@ -102,6 +103,14 @@ else if (command.includes("reload") || command.includes("refresh")) {
       }, 1500);
     }
   }, [listening]);
+
+  if (!browserSupportsSpeechRecognition()) {
+    return (
+      <div className="fixed bottom-6 right-6 z-50 bg-red-500 text-white p-4 rounded-lg shadow-lg">
+        ❌ Your browser doesn't support speech recognition.
+      </div>
+    );
+  }
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center">
@@ -114,7 +123,6 @@ else if (command.includes("reload") || command.includes("refresh")) {
       <p className="text-xs text-gray-300 mt-2 max-w-[220px] text-center">
         {listening ? "🎧 Listening..." : transcript}
       </p>
-      
     </div>
   );
 };
