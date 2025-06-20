@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useStateContext } from '../context';
 import { DisplayCampaigns, Navbar } from '../components';
 import { landing } from '../assets';
+import { Link } from 'react-router-dom';
 
 
 const Home = () => {
@@ -55,12 +56,12 @@ const Home = () => {
           <p className="text-lg text-gray-300 mb-6">
             Back innovations powered by blockchain. Transparent. Secure. Borderless.
           </p>
-          <a
-            href="/create-campaign"
-            className="inline-block px-6 py-3 bg-gradient-to-r from-green-400 to-blue-600 hover:from-green-500 hover:to-blue-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition duration-300"
-          >
-            💸 Launch Your Campaign
-          </a>
+        <Link
+  to="/create-campaign"
+  className="inline-block px-6 py-3 bg-gradient-to-r from-green-400 to-blue-600 hover:from-green-500 hover:to-blue-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition duration-300"
+>
+  💸 Launch Your Campaign
+</Link>
         </div>
 
         {/* Right Image */}
