@@ -32,9 +32,9 @@ BlockFund is a modern, decentralized crowdfunding platform built with React, Vit
 1. Clone the repository
    bash
    git clone https://github.com/yourusername/blockfund.git
-   In terminal go to cd blockfund
-2. npm install
-3. deploy contract using command - thirdweb deploy
-4. npm run dev
-5. Go to http://localhost:5173
+   In terminal type cd blockfund
+3. npm install
+4. deploy contract using command - thirdweb deploy
+5. npm run dev
+6. Go to http://localhost:5173
    
